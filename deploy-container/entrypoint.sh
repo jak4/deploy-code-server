@@ -6,6 +6,16 @@ PREFIX="deploy-code-server"
 
 mkdir -p $START_DIR
 
+# Inject Roo-Code settings from environment variables
+echo "[$PREFIX] Injecting Roo-Code settings..."
+/usr/local/bin/inject_settings.sh
+sleep 2
+# Install Roo-Code extension from pre-built artifact
+echo "[$PREFIX] Installing Roo-Code extension..."
+#code-server --install-extension /opt/extensions/roocode.vsix
+echo "[$PREFIX] Roo-Code installation command finished."
+
+
 # function to clone the git repo or add a user's first file if no repo was specified.
 project_init () {
     [ -z "${GIT_REPO}" ] && echo "[$PREFIX] No GIT_REPO specified" && echo "Example file. Have questions? Join us at https://community.coder.com" > $START_DIR/coder.txt || git clone $GIT_REPO $START_DIR
